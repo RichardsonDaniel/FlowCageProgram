@@ -53,20 +53,34 @@ def beginTrial():
 
     #Continous loop until correct port (portCorrectNum) shows tripped
     
-    while GPIO.input(pinListIN[portCorrectNum-1]) == True:
-        if GPIO.input(pinListIN[0]) == False:
-            CSV.writerow(["PORT 1 TRIPPED", strftime("%H:%M:%S")])
-            print("PORT 1 TRIPPED")
-        if GPIO.input(pinListIN[1]) == False:
-            CSV.writerow(["PORT 2 TRIPPED", strftime("%H:%M:%S")])
-            print("PORT 2 TRIPPED")
-        if GPIO.input(pinListIN[2]) == False:
-            CSV.writerow(["PORT 3 TRIPPED", strftime("%H:%M:%S")])
-            print("PORT 3 TRIPPED")
-        if GPIO.input(pinListIN[3]) == False:
-            CSV.writerow(["PORT 4 TRIPPED", strftime("%H:%M:%S")])
-            print("PORT 4 TRIPPED")
+    continuousChecker = 0
+    while (continuousChecker < 5):
+        while GPIO.input(pinListIN[portCorrectNum-1]) == False:
+            if GPIO.input(pinListIN[0]) == True:
+                CSV.writerow(["PORT 1 TRIPPED", strftime("%H:%M:%S")])
+                print("PORT 1 TRIPPED")
+                if (pinListIN[0] != pinListIN[portCorrectNum-1]):
+                    continuousChecker = 0
+            if GPIO.input(pinListIN[1]) == True:
+                CSV.writerow(["PORT 2 TRIPPED", strftime("%H:%M:%S")])
+                print("PORT 2 TRIPPED")
+                if (pinListIN[1] != pinListIN[portCorrectNum-1]):
+                    continuousChecker = 0
+            if GPIO.input(pinListIN[2]) == True:
+                CSV.writerow(["PORT 3 TRIPPED", strftime("%H:%M:%S")])
+                print("PORT 3 TRIPPED")
+                if (pinListIN[2] != pinListIN[portCorrectNum-1]):
+                    continuousChecker = 0
+            if GPIO.input(pinListIN[3]) == True:
+                CSV.writerow(["PORT 4 TRIPPED", strftime("%H:%M:%S")])
+                print("PORT 4 TRIPPED")
+                if (pinListIN[3] != pinListIN[portCorrectNum-1]):
+                    continuousChecker = 0
+            if (GPIO.input(pinListIN[3]) == False and GPIO.input(pinListIN[2]) == False and GPIO.input(pinListIN[1]) == False and GPIO.input(pinListIN[0]) == False):
+                continuousChecker = 0
+        print(continuousChecker)
         time.sleep(0.1);
+        continuousChecker += 1
 
     #End timer and fire off correct pin for water deliver
     end = time.time()
@@ -115,6 +129,8 @@ with open("/home/pi/Desktop/FlowCageProgram/OUTPUT/FCP - " + fileTime + '.csv', 
                     GPIO.output(26, GPIO.input(8))
                     i += 1
                     time.sleep(0.1);
+                for i in pinList:
+                    GPIO.output(i, GPIO.HIGH)
         elif select == "Test LED":  # If user clicks 'Test LED'
             for i in pinList:
                 GPIO.output(i, GPIO.LOW)
@@ -204,16 +220,16 @@ with open("/home/pi/Desktop/FlowCageProgram/OUTPUT/FCP - " + fileTime + '.csv', 
     #~~~~~~~~~~~~~~~~~~
 
     # Create GUI
-    program = gui("Flow Cage Program (FCP)", "500x400")  # Sets size and title of main GUI
+    program = gui("Multi-choice Chamber Program (MCP)", "500x400")  # Sets size and title of main GUI
     program.setBg("lightBlue")  # Sets background colour
      
     # Label and Option boxes within GUI
-    program.addLabel("welcome", "Welcome! to Big E's flow program")  # Title
+    program.addLabel("welcome", "Welcome! to the Multi-choice Chamber")  # Title
     program.setLabelBg("welcome", "light gray")  # Sets title background
     program.addLabelEntry("Mouse Number")
     program.addLabelOptionBox("How many ports in use", ["1", "2", "3","4"])
     program.addLabelOptionBox("Which port is correct?", ["1", "2", "3","4"])
-    program.addLabelOptionBox("How long should the valve fire for (S)?", ["0.5", "0.25", "1","2"])
+    program.addLabelOptionBox("How long should the valve fire for (S)?", ["0.1", "0.2", "0.3","0.4","0.5","0.6","0.7","0.8","0.9","1","2"])
     program.addLabel("question", "What would you like to do?")  # Label
      
     # Radiobuttons within GUI
