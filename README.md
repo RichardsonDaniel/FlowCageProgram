@@ -24,9 +24,6 @@ This program is the basis for the Anemotaxis chamber within the lab, the program
 ##### - 📄 FlowCageProgram
 ###### Python file designed to be run on the raspberry pi in the lab to contol a touchscreen, camera, a set of 8 relays and a bank of IR emmiters/recievers.
 [](https://emojipedia.org/page-facing-up/)
-##### - 📄 License.txt
-###### Liscense is a text file holding the licensing information on the current project, currently  [GNU Affero General Public License v3.0](https://www.gnu.org/licenses/agpl-3.0.en.html)
-[](https://emojipedia.org/page-facing-up/)
 ##### - 📄 README.txt
 ###### ReadME is the document you are currently reading holding usage and general information.
 
@@ -165,8 +162,7 @@ Rasberry pi with preinstalled libraries source code and setups [LINK].
 
 
 ## License:
-
- [GNU Affero General Public License v3.0](https://www.gnu.org/licenses/agpl-3.0.en.html) © [Daniel Richardson](github.com/RichardsonDaniel)
+ © [Daniel Richardson](github.com/RichardsonDaniel)
 
 
 
